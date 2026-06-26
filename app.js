@@ -10,7 +10,14 @@ function inc(e){return (e.charges||[]).reduce((a,b)=>a+Number(b.amount||0),0)}fu
 function render(){norm();renderDash();renderAgenda();renderEvents();renderMembersBase();renderCash();renderReports();document.querySelectorAll('.admin').forEach(x=>x.style.display=can()?'':'none')}
 function row(e){let d=new Date(e.date+'T00:00:00');return `<div class="row"><div class="date">${(e.date||'').slice(8,10)}<br>${d.toLocaleString('es-MX',{month:'short'}).toUpperCase()}</div><div class="mainrow"><b>${e.type} - ${e.client}</b><br><span>${e.time||''} · ${e.place}</span></div><span class="badge">Pendiente</span></div>`}
 function renderDash(){let cash=db.events.reduce((a,e)=>a+inc(e)-exp(e),0)-db.events.flatMap(e=>e.members).filter(m=>m.paid).reduce((a,m)=>a+m.salary,0)-db.events.flatMap(e=>e.admins).filter(a=>a.paid).reduce((x,a)=>x+a.amount,0);let pending=db.events.reduce((a,e)=>a+Math.max(0,e.amount-inc(e)),0);$('ke').textContent=db.events.length;$('kc').textContent=money(cash);$('kp').textContent=money(pending);$('kl').textContent=money(cash);$('upcoming').innerHTML=db.events.map(row).join('')}
-function renderAgenda(){$('agendaList').innerHTML=db.events.map(e=>`<div class="row"><div class="date">${(e.date||'').slice(8,10)}</div><div><b>${e.type}</b><br>${e.time||''}<br>${e.place}</div></div>`).join('')}
+function renderAgenda(){
+  $('agendaList').innerHTML=db.events.map(e=>{
+    const d=new Date(e.date+'T00:00:00');
+    const day=(e.date||'').slice(8,10);
+    const mon=d.toLocaleString('es-MX',{month:'short'}).toUpperCase().replace('.','');
+    return `<div class="row"><div class="date">${day}<br>${mon}</div><div><b>${e.type}</b><br>${e.time||''}<br>${e.place}</div></div>`;
+  }).join('');
+}
 function clearForm(){['c','d','t','l','h','m','com'].forEach(id=>$(id).value='')}
 function addEvent(){let e={id:Date.now(),client:$('c').value,type:$('t').value,date:$('d').value,time:$('h').value,place:$('l').value,amount:Number($('m').value||0),comment:$('com').value,charges:[],expenses:[],members:db.baseMembers.map(m=>({...m,paid:false})),admins:[{name:'Admin 1',amount:0,paid:false},{name:'Admin 2',amount:0,paid:false},{name:'Admin 3',amount:0,paid:false}],files:[]};db.events.push(e);clearForm();save()}
 function renderEvents(){let q=($('q')?.value||'').toLowerCase();$('eventList').innerHTML=db.events.filter(e=>[e.client,e.type,e.date,e.place].join(' ').toLowerCase().includes(q)).map(e=>`<div class="row"><div onclick="openEvent(${e.id})" class="mainrow"><b>${e.type} - ${e.client}</b><br>${e.date} ${e.time||''}<br>${e.place} · ${money(e.amount)}</div>${can()?`<div class="actions"><button class="btn light small" onclick="editEvent(${e.id})">Editar</button><button class="btn danger small" onclick="delEvent(${e.id})">Eliminar</button></div>`:''}</div>`).join('')}
