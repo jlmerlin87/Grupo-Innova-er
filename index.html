@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Grupo Innova ERP v6.0</title>
+  <title>Grupo Innova ERP v6.1</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,13 +12,13 @@
     <div class="login-card">
       <div class="logo">GI</div>
       <h1>Grupo Innova ERP</h1>
-      <p class="muted">Versión 6.0 · Web/PWA</p>
+      <p class="muted">Versión 6.1 · Web/PWA</p>
       <label>Usuario</label>
       <input id="loginUser" placeholder="admin">
       <label>Contraseña</label>
       <input id="loginPass" type="password" placeholder="admin123">
       <button class="btn primary" onclick="login()">Entrar</button>
-      <p class="hint">Admin: <b>admin</b> / <b>admin123</b><br>Integrante: <b>agenda</b> / <b>agenda123</b></p>
+      <p class="hint">Admin: <b>admin</b> / <b>admin123</b><br>Solo lectura: <b>lector</b> / <b>lector123</b><br>Integrante: <b>agenda</b> / <b>agenda123</b></p>
     </div>
   </div>
 
@@ -46,18 +46,10 @@
         </div>
       </section>
 
-      <section id="agenda" class="screen">
-        <div class="card">
-          <h2>Agenda</h2>
-          <div id="agendaList"></div>
-        </div>
-      </section>
+      <section id="agenda" class="screen"><div class="card"><h2>Agenda</h2><div id="agendaList"></div></div></section>
 
       <section id="events" class="screen">
-        <div class="toolbar">
-          <input id="eventSearch" placeholder="Buscar por fecha, cliente, evento o lugar" oninput="renderEvents()">
-          <button class="btn primary admin-only" onclick="openEventForm()">+ Evento</button>
-        </div>
+        <div class="toolbar"><input id="eventSearch" placeholder="Buscar por fecha, cliente, evento o lugar" oninput="renderEvents()"><button class="btn primary admin-only" onclick="openEventForm()">+ Evento</button></div>
         <div id="eventList"></div>
       </section>
 
@@ -65,66 +57,20 @@
         <button class="btn ghost" onclick="showScreen('events')">← Regresar</button>
         <div id="eventHeader" class="event-header"></div>
         <div class="tabs">
-          <button onclick="showEventTab('info')" class="tab active">Información</button>
-          <button onclick="showEventTab('cobros')" class="tab">Cobros</button>
-          <button onclick="showEventTab('gastos')" class="tab">Gastos</button>
-          <button onclick="showEventTab('integrantes')" class="tab">Integrantes</button>
-          <button onclick="showEventTab('admins')" class="tab">Administrativos</button>
-          <button onclick="showEventTab('adjuntos')" class="tab">Adjuntos</button>
-          <button onclick="showEventTab('resumen')" class="tab">Resumen</button>
+          <button onclick="showEventTab('info')" class="tab active">Información</button><button onclick="showEventTab('cobros')" class="tab">Cobros</button><button onclick="showEventTab('gastos')" class="tab">Gastos</button><button onclick="showEventTab('integrantes')" class="tab">Integrantes</button><button onclick="showEventTab('admins')" class="tab">Administrativos</button><button onclick="showEventTab('adjuntos')" class="tab">Adjuntos</button><button onclick="showEventTab('resumen')" class="tab">Resumen</button>
         </div>
         <div id="eventTabContent" class="card"></div>
       </section>
 
-      <section id="members" class="screen">
-        <div class="toolbar">
-          <h2>Integrantes</h2>
-          <button class="btn primary admin-only" onclick="addMember()">+ Integrante</button>
-        </div>
-        <div id="memberList"></div>
-      </section>
-
-      <section id="cashbox" class="screen">
-        <div class="card">
-          <h2>Caja</h2>
-          <p class="muted">Bitácora automática de efectivo: cobros, gastos y pagos marcados.</p>
-          <div id="cashboxList"></div>
-        </div>
-      </section>
-
-      <section id="settings" class="screen">
-        <div class="card">
-          <h2>Configuración</h2>
-          <div class="settings-grid">
-            <div class="setting-item"><b>Usuarios</b><span>Admin, solo lectura e integrantes</span></div>
-            <div class="setting-item"><b>Tipos de evento</b><span>Boda, XV, Graduación, Corporativo</span></div>
-            <div class="setting-item"><b>Tipos de gasto</b><span>Gasolina, casetas, comida, hotel, otro</span></div>
-            <div class="setting-item"><b>Respaldo</b><span>Google Drive al cerrar app (pendiente)</span></div>
-          </div>
-        </div>
-      </section>
+      <section id="members" class="screen"><div class="toolbar"><h2>Integrantes</h2><button class="btn primary admin-only" onclick="addMember()">+ Integrante</button></div><div id="memberList"></div></section>
+      <section id="cashbox" class="screen"><div class="card"><h2>Caja</h2><p class="muted">Bitácora automática de efectivo: cobros, gastos y pagos marcados.</p><div id="cashboxList"></div></div></section>
+      <section id="settings" class="screen"><div class="card"><h2>Configuración</h2><div class="settings-grid"><div class="setting-item"><b>Usuarios</b><span>Admin, solo lectura e integrantes</span></div><div class="setting-item"><b>Tipos de evento</b><span>Boda, XV, Graduación, Corporativo</span></div><div class="setting-item"><b>Tipos de gasto</b><span>Gasolina, casetas, comida, hotel, otro</span></div><div class="setting-item"><b>Respaldo</b><span>Google Drive al cerrar app (pendiente)</span></div><button class="btn danger admin-only" onclick="resetDemo()">Reiniciar datos locales</button></div></div></section>
     </main>
-
     <nav id="bottomNav" class="bottom-nav"></nav>
   </div>
 
-  <dialog id="eventDialog">
-    <form method="dialog" class="dialog-card">
-      <h2>Nuevo evento</h2>
-      <input id="newType" placeholder="Tipo de evento">
-      <input id="newClient" placeholder="Cliente">
-      <input id="newPhone" placeholder="Teléfono">
-      <input id="newPlace" placeholder="Lugar">
-      <input id="newDate" type="date">
-      <input id="newTime" type="time">
-      <input id="newAmount" type="number" placeholder="Monto contratado">
-      <div class="dialog-actions">
-        <button class="btn ghost" value="cancel">Cancelar</button>
-        <button class="btn primary" value="default" onclick="saveEvent(event)">Guardar</button>
-      </div>
-    </form>
-  </dialog>
-
+  <dialog id="eventDialog"><form method="dialog" class="dialog-card"><h2 id="eventDialogTitle">Nuevo evento</h2><input id="newType" placeholder="Tipo de evento"><input id="newClient" placeholder="Cliente"><input id="newPhone" placeholder="Teléfono"><input id="newPlace" placeholder="Lugar"><input id="newDate" type="date"><input id="newTime" type="time"><input id="newAmount" type="number" placeholder="Monto contratado"><div class="dialog-actions"><button class="btn ghost" value="cancel">Cancelar</button><button class="btn primary" value="default" onclick="saveEvent(event)">Guardar</button></div></form></dialog>
+  <input id="filePicker" class="hidden" type="file" multiple onchange="handleAttachFiles(event)">
   <script src="app.js"></script>
 </body>
 </html>
