@@ -1,76 +1,13 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Grupo Innova ERP v6.1</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="loginView" class="login-view">
-    <div class="login-card">
-      <div class="logo">GI</div>
-      <h1>Grupo Innova ERP</h1>
-      <p class="muted">Versión 6.1 · Web/PWA</p>
-      <label>Usuario</label>
-      <input id="loginUser" placeholder="admin">
-      <label>Contraseña</label>
-      <input id="loginPass" type="password" placeholder="admin123">
-      <button class="btn primary" onclick="login()">Entrar</button>
-      <p class="hint">Admin: <b>admin</b> / <b>admin123</b><br>Solo lectura: <b>lector</b> / <b>lector123</b><br>Integrante: <b>agenda</b> / <b>agenda123</b></p>
-    </div>
-  </div>
-
-  <div id="appView" class="app-view hidden">
-    <header class="topbar">
-      <div>
-        <h1 id="screenTitle">Dashboard</h1>
-        <p id="roleLabel">Administrador principal</p>
-      </div>
-      <button class="btn ghost" onclick="logout()">Salir</button>
-    </header>
-
-    <main>
-      <section id="dashboard" class="screen active">
-        <div class="kpi-grid">
-          <article class="kpi blue"><span>💵 Efectivo</span><strong id="kpiCash">$0</strong></article>
-          <article class="kpi purple"><span>💰 Por cobrar</span><strong id="kpiPending">$0</strong></article>
-          <article class="kpi blue"><span>👨‍🎤 Sueldos pendientes</span><strong id="kpiMusicians">$0</strong></article>
-          <article class="kpi purple"><span>👨‍💼 Admin pendientes</span><strong id="kpiAdmins">$0</strong></article>
-          <article class="kpi black wide"><span>📈 Dinero libre</span><strong id="kpiFree">$0</strong></article>
-        </div>
-        <div class="card">
-          <h2>Próximos eventos</h2>
-          <div id="dashboardEvents"></div>
-        </div>
-      </section>
-
-      <section id="agenda" class="screen"><div class="card"><h2>Agenda</h2><div id="agendaList"></div></div></section>
-
-      <section id="events" class="screen">
-        <div class="toolbar"><input id="eventSearch" placeholder="Buscar por fecha, cliente, evento o lugar" oninput="renderEvents()"><button class="btn primary admin-only" onclick="openEventForm()">+ Evento</button></div>
-        <div id="eventList"></div>
-      </section>
-
-      <section id="eventDetail" class="screen">
-        <button class="btn ghost" onclick="showScreen('events')">← Regresar</button>
-        <div id="eventHeader" class="event-header"></div>
-        <div class="tabs">
-          <button onclick="showEventTab('info')" class="tab active">Información</button><button onclick="showEventTab('cobros')" class="tab">Cobros</button><button onclick="showEventTab('gastos')" class="tab">Gastos</button><button onclick="showEventTab('integrantes')" class="tab">Integrantes</button><button onclick="showEventTab('admins')" class="tab">Administrativos</button><button onclick="showEventTab('adjuntos')" class="tab">Adjuntos</button><button onclick="showEventTab('resumen')" class="tab">Resumen</button>
-        </div>
-        <div id="eventTabContent" class="card"></div>
-      </section>
-
-      <section id="members" class="screen"><div class="toolbar"><h2>Integrantes</h2><button class="btn primary admin-only" onclick="addMember()">+ Integrante</button></div><div id="memberList"></div></section>
-      <section id="cashbox" class="screen"><div class="card"><h2>Caja</h2><p class="muted">Bitácora automática de efectivo: cobros, gastos y pagos marcados.</p><div id="cashboxList"></div></div></section>
-      <section id="settings" class="screen"><div class="card"><h2>Configuración</h2><div class="settings-grid"><div class="setting-item"><b>Usuarios</b><span>Admin, solo lectura e integrantes</span></div><div class="setting-item"><b>Tipos de evento</b><span>Boda, XV, Graduación, Corporativo</span></div><div class="setting-item"><b>Tipos de gasto</b><span>Gasolina, casetas, comida, hotel, otro</span></div><div class="setting-item"><b>Respaldo</b><span>Google Drive al cerrar app (pendiente)</span></div><button class="btn danger admin-only" onclick="resetDemo()">Reiniciar datos locales</button></div></div></section>
-    </main>
-    <nav id="bottomNav" class="bottom-nav"></nav>
-  </div>
-
-  <dialog id="eventDialog"><form method="dialog" class="dialog-card"><h2 id="eventDialogTitle">Nuevo evento</h2><input id="newType" placeholder="Tipo de evento"><input id="newClient" placeholder="Cliente"><input id="newPhone" placeholder="Teléfono"><input id="newPlace" placeholder="Lugar"><input id="newDate" type="date"><input id="newTime" type="time"><input id="newAmount" type="number" placeholder="Monto contratado"><div class="dialog-actions"><button class="btn ghost" value="cancel">Cancelar</button><button class="btn primary" value="default" onclick="saveEvent(event)">Guardar</button></div></form></dialog>
-  <input id="filePicker" class="hidden" type="file" multiple onchange="handleAttachFiles(event)">
-  <script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Grupo Innova ERP v6.2</title><link rel="stylesheet" href="style.css"><link rel="manifest" href="manifest.json"></head><body>
+<section id="login" class="login"><div class="login-card"><div class="logo">GI</div><h1>Grupo Innova ERP</h1><p>Versión 6.2 · Web/PWA</p><label>Usuario</label><input id="u"><label>Contraseña</label><input id="p" type="password"><button onclick="login()" class="btn primary full">Entrar</button></div></section>
+<section id="app" class="app hidden"><aside><div class="brand"><div class="mini">GI</div><b>Grupo Innova ERP</b></div><nav id="nav"></nav><div class="version">Versión 6.2<br>Web/PWA</div></aside><main><header><div><h1 id="title">Dashboard</h1><span id="sub">Panel de control</span></div><button class="btn light" onclick="location.reload()">Salir</button></header>
+<section id="dashboard" class="page active"><div class="kpis"><div class="kpi"><span>📅</span><p>Eventos</p><h2 id="ke">0</h2></div><div class="kpi"><span>💵</span><p>Efectivo</p><h2 id="kc">$0</h2></div><div class="kpi"><span>💰</span><p>Por cobrar</p><h2 id="kp">$0</h2></div><div class="kpi"><span>📈</span><p>Dinero libre</p><h2 id="kl">$0</h2></div></div>
+<div class="cols"><div class="panel"><h2>📅 Eventos próximos</h2><div id="upcoming"></div></div><div class="panel admin"><h2>📅 Registrar nuevo evento</h2><div class="grid"><label>Cliente<input id="c" placeholder="Nombre del cliente"></label><label>Fecha<input id="d" type="date"></label><label>Tipo de evento<input id="t" placeholder="Boda, XV, Graduación"></label><label>Lugar<input id="l" placeholder="Lugar"></label><label>Hora<input id="h" type="time"></label><label>Monto acordado<input id="m" type="number" placeholder="0.00"></label></div><label>Comentario / Detalles del evento<textarea id="com" placeholder="Detalles, requisitos, notas importantes..."></textarea></label><div class="actions end"><button class="btn light" onclick="clearForm()">Limpiar</button><button class="btn primary" onclick="addEvent()">💾 Guardar evento</button></div></div></div>
+<div class="panel"><h2>🔐 Datos de acceso al sistema</h2><div class="access"><div><b>Admin</b><p>Usuario: <span>Maedrs87</span></p><p>Contraseña: <span>Zoom101p</span></p></div><div><b>Lector</b><p>Usuario: <span>Admin545</span></p><p>Contraseña: <span>AdminGi116</span></p></div><div><b>Agenda</b><p>Usuario: <span>innova</span></p><p>Contraseña: <span>innnova</span></p></div></div><button class="btn soft full" onclick="save()">💾 Guardar información</button></div></section>
+<section id="agenda" class="page"><div class="panel"><h2>Agenda</h2><div id="agendaList"></div></div></section>
+<section id="events" class="page"><div class="panel"><h2>Eventos</h2><input id="q" oninput="render()" placeholder="Buscar evento, cliente, fecha o lugar"><div id="eventList"></div></div></section>
+<section id="detail" class="page"><button class="btn light" onclick="show('events')">← Regresar</button><div id="head" class="detail"></div><div class="tabs"><button onclick="tab('info')">Información</button><button onclick="tab('charges')">Cobros</button><button onclick="tab('expenses')">Gastos</button><button onclick="tab('members')">Integrantes</button><button onclick="tab('admins')">Administrativos</button><button onclick="tab('files')">Adjuntos</button><button onclick="tab('summary')">Resumen</button></div><div id="content" class="panel"></div></section>
+<section id="cash" class="page"><div class="panel"><h2>Caja</h2><div id="cashList"></div></div></section>
+<section id="reports" class="page"><div class="panel"><h2>Reportes</h2><div id="reportsBox"></div></div></section>
+<section id="users" class="page"><div class="panel"><h2>Usuarios</h2><div class="access"><div><b>Admin</b><p>Maedrs87</p></div><div><b>Lector</b><p>Admin545</p></div><div><b>Agenda</b><p>innova</p></div></div></div></section>
+</main></section><input id="file" type="file" multiple class="hidden" onchange="files(event)"><script src="app.js"></script></body></html>

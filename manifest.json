@@ -1,1 +1,9 @@
-{"name":"Grupo Innova ERP","short_name":"Innova ERP","start_url":"index.html","display":"standalone","background_color":"#f3f4f6","theme_color":"#111827","icons":[]}
+{
+  "name": "Grupo Innova ERP",
+  "short_name": "Innova ERP",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f6f8fb",
+  "theme_color": "#0f1b2d",
+  "icons": []
+}
